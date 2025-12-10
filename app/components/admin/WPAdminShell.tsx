@@ -28,16 +28,20 @@ interface WPAdminShellProps {
 	plugin?: PluginConfig;
 }
 
-const MENU_ITEMS: MenuItem[] = [
-	{ icon: "dashboard", label: "Dashboard" },
-	{ icon: "admin-post", label: "Posts" },
-	{ icon: "admin-media", label: "Media" },
-	{ icon: "admin-page", label: "Pages" },
-	{ icon: "admin-comments", label: "Comments" },
-	{ icon: "admin-appearance", label: "Appearance" },
-	{ icon: "admin-plugins", label: "Plugins" },
-	{ icon: "admin-users", label: "Users" },
-	{ icon: "admin-generic", label: "Settings" },
+const MENU_GROUPS: MenuItem[][] = [
+	[{ icon: "dashboard", label: "Dashboard" }],
+	[
+		{ icon: "admin-post", label: "Posts" },
+		{ icon: "admin-media", label: "Media" },
+		{ icon: "admin-page", label: "Pages" },
+		{ icon: "admin-comments", label: "Comments" },
+	],
+	[
+		{ icon: "admin-appearance", label: "Appearance" },
+		{ icon: "admin-plugins", label: "Plugins" },
+		{ icon: "admin-users", label: "Users" },
+		{ icon: "admin-generic", label: "Settings" },
+	],
 ];
 
 export const WPAdminShell = ({
@@ -46,13 +50,13 @@ export const WPAdminShell = ({
 	plugin,
 }: WPAdminShellProps) => {
 	return (
-		<div className="flex flex-col h-screen">
+		<div className="flex flex-col h-screen font-system">
 			{/* Top Bar */}
 			<header className="w-full h-8 bg-[#1d2327] flex items-center justify-between px-3 z-50">
 				{/* Left: WP logo + site name */}
 				<div className="flex items-center gap-4">
 					<FaWordpress className="w-5 h-5 text-[#a0a5aa] hover:text-[#00b9eb] cursor-pointer" />
-					<span className="text-[13px] font-medium text-[#c3c4c7] hover:text-[#72aee6] cursor-pointer">
+					<span className="text-[13px] font-medium text-white/90 hover:text-[#72aee6] cursor-pointer">
 						{siteName}
 					</span>
 				</div>
@@ -64,8 +68,8 @@ export const WPAdminShell = ({
 						size={16}
 						className="text-[#a0a5aa] hover:text-[#00b9eb] cursor-pointer"
 					/>
-					<div className="flex items-center gap-2 cursor-pointer">
-						<span className="text-[13px] font-medium text-[#c3c4c7] hover:text-[#72aee6]">
+					<div className="flex items-center gap-2 cursor-pointer group">
+						<span className="text-[13px] font-medium text-white/90 group-hover:text-[#72aee6]">
 							Howdy, Admin
 						</span>
 						<div className="w-6 h-6 rounded-full bg-[#50575e]" />
@@ -77,36 +81,33 @@ export const WPAdminShell = ({
 				{/* Sidebar */}
 				<aside className="w-[160px] bg-[#1d2327] shrink-0 flex flex-col">
 					<nav className="py-2 flex-1 overflow-y-auto">
-						{MENU_ITEMS.map((item) => (
-							<div
-								key={item.label}
-								className={`flex items-center gap-2 px-3 py-2 cursor-pointer transition-colors ${
-									item.active
-										? "bg-[#2271b1] text-white"
-										: "text-[#c3c4c7] hover:text-white hover:bg-[#2c3338]"
-								}`}
-							>
-								<Dashicon icon={item.icon} size={18} />
-								<span className="text-[13px] font-medium">{item.label}</span>
+						{MENU_GROUPS.map((group, groupIndex) => (
+							<div key={groupIndex} className={groupIndex > 0 ? "mt-2" : ""}>
+								{group.map((item) => (
+									<div
+										key={item.label}
+										className={`flex items-center gap-2.5 px-3 py-1.5 cursor-pointer transition-colors hover:bg-[#2c3338] ${
+											item.active ? "bg-[#2271b1]" : ""
+										}`}
+									>
+										<Dashicon icon={item.icon} size={20} className="text-[#a0a5aa]" />
+										<span className="text-sm font-medium text-white">{item.label}</span>
+									</div>
+								))}
 							</div>
 						))}
 
 						{/* Plugin section with submenu */}
 						{plugin && (
-							<>
-								{/* Separator */}
-								<div className="my-2 border-t border-[#3c4349]" />
-
+							<div className="mt-2">
 								{/* Plugin parent item */}
 								<div
-									className={`flex items-center gap-2 px-3 py-2 cursor-pointer transition-colors ${
-										plugin.active
-											? "bg-[#2271b1] text-white"
-											: "text-[#c3c4c7] hover:text-white hover:bg-[#2c3338]"
+									className={`flex items-center gap-2.5 px-3 py-1.5 cursor-pointer transition-colors hover:bg-[#2c3338] ${
+										plugin.active ? "bg-[#2271b1]" : ""
 									}`}
 								>
-									<Dashicon icon={plugin.icon} size={18} />
-									<span className="text-[13px] font-medium">{plugin.label}</span>
+									<Dashicon icon={plugin.icon} size={20} className="text-[#a0a5aa]" />
+									<span className="text-sm font-medium text-white">{plugin.label}</span>
 								</div>
 
 								{/* Plugin submenu items */}
@@ -114,17 +115,17 @@ export const WPAdminShell = ({
 									{plugin.items.map((subItem) => (
 										<div
 											key={subItem.label}
-											className={`pl-9 pr-3 py-1.5 cursor-pointer transition-colors ${
+											className={`pl-10 pr-3 py-1 cursor-pointer transition-colors ${
 												subItem.active
 													? "text-white"
-													: "text-[#c3c4c7] hover:text-[#72aee6]"
+													: "text-white/70 hover:text-white"
 											}`}
 										>
-											<span className="text-[13px]">{subItem.label}</span>
+											<span className="text-sm">{subItem.label}</span>
 										</div>
 									))}
 								</div>
-							</>
+							</div>
 						)}
 					</nav>
 				</aside>
