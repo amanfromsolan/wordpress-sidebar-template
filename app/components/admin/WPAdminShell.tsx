@@ -82,7 +82,7 @@ export const WPAdminShell = ({
 				<aside className="w-[160px] bg-[#1d2327] shrink-0 flex flex-col">
 					<nav className="py-2 flex-1 overflow-y-auto">
 						{MENU_GROUPS.map((group, groupIndex) => (
-							<div key={groupIndex} className={groupIndex > 0 ? "mt-2" : ""}>
+							<div key={groupIndex} className={groupIndex > 0 ? "mt-4" : ""}>
 								{group.map((item) => (
 									<div
 										key={item.label}
@@ -90,7 +90,7 @@ export const WPAdminShell = ({
 											item.active ? "bg-[#2271b1]" : ""
 										}`}
 									>
-										<Dashicon icon={item.icon} size={20} className="text-[#a0a5aa]" />
+										<Dashicon icon={item.icon} size={20} className={item.active ? "text-white" : "text-[#a0a5aa]"} />
 										<span className="text-sm font-medium text-white">{item.label}</span>
 									</div>
 								))}
@@ -99,23 +99,23 @@ export const WPAdminShell = ({
 
 						{/* Plugin section with submenu */}
 						{plugin && (
-							<div className="mt-2">
+							<div className="mt-4">
 								{/* Plugin parent item */}
 								<div
 									className={`flex items-center gap-2.5 px-3 py-1.5 cursor-pointer transition-colors hover:bg-[#2c3338] ${
 										plugin.active ? "bg-[#2271b1]" : ""
 									}`}
 								>
-									<Dashicon icon={plugin.icon} size={20} className="text-[#a0a5aa]" />
+									<Dashicon icon={plugin.icon} size={20} className={plugin.active ? "text-white" : "text-[#a0a5aa]"} />
 									<span className="text-sm font-medium text-white">{plugin.label}</span>
 								</div>
 
 								{/* Plugin submenu items */}
-								<div className="bg-[#2c3338]">
+								<div className="bg-[#2c3338] py-1.5">
 									{plugin.items.map((subItem) => (
 										<div
 											key={subItem.label}
-											className={`pl-10 pr-3 py-1 cursor-pointer transition-colors ${
+											className={`px-3 py-[5px] cursor-pointer transition-colors ${
 												subItem.active
 													? "text-white"
 													: "text-white/70 hover:text-white"
