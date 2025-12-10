@@ -72,7 +72,16 @@ export const WPAdminShell = ({
 						<span className="text-[13px] font-medium text-white/90 group-hover:text-[#72aee6]">
 							Howdy, Admin
 						</span>
-						<div className="w-6 h-6 rounded-full bg-[#50575e]" />
+						<div className="size-5 rounded-[1px] bg-zinc-700 flex items-center justify-center overflow-hidden">
+							<svg
+								viewBox="0 0 24 24"
+								className="w-5 h-5 text-zinc-400/80 translate-y-0.5"
+								fill="currentColor"
+							>
+								<circle cx="12" cy="8" r="4" />
+								<path d="M12 14c-6 0-8 3-8 5v1h16v-1c0-2-2-5-8-5z" />
+							</svg>
+						</div>
 					</div>
 				</div>
 			</header>
